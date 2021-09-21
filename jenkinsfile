@@ -1,0 +1,39 @@
+currentBuild.displayName="learndevops-#"+BUILD_NUMBER
+pipeline{
+   agent { label 'slave'}
+   environment {
+     PATH = "/opt/maven/bin:$PATH"
+     }
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+        stage('checkout'){
+            steps{
+               checkout([$class: 'GitSCM', 
+               branches: [[name: '*/dev']],
+               extensions: [], 
+               userRemoteConfigs: [
+                   [credentialsId: 'github', url: 'https://github.com/Bhanukiran213/hello-world-war.git']]]) 
+            }
+        }
+        stage('build'){
+           steps{
+               sh 'mvn package'
+           }
+        }
+        stage('deoloy'){
+            steps{
+                deploy adapters: 
+                [
+                    tomcat8(credentialsId: 'tomcat', 
+                    path: '', 
+                    url: 'http://52.66.213.162:8080/')], 
+                    contextPath: 'hello', 
+                    war: '**/target/*.war'
+            }
+        }
+    }
+}
