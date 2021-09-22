@@ -36,7 +36,7 @@ pipeline{
                        type: 'war']
                        ], 
                        credentialsId: 'kiran-cred', 
-                       groupId: 'com.efsavage', 
+                       groupId: "${mavenPom.groupid}", 
                        nexusUrl: '3.108.217.205:8081', 
                        nexusVersion: 'nexus3', 
                        protocol: 'http',
