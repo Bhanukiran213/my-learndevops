@@ -32,7 +32,7 @@ pipeline{
                    [
                        artifactId: '>hello-world-war', 
                        classifier: '', 
-                       file: "/home/ec2-user/workspace/learndevops/target/hello-world-${mavenPom.version}.war", 
+                       file: "/home/ec2-user/workspace/learndevops/target/hello-world-war-${mavenPom.version}.war", 
                        type: 'war']
                        ], 
                        credentialsId: 'kiran-cred', 
