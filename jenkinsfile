@@ -30,7 +30,7 @@ pipeline{
                    [
                        artifactId: '>hello-world-war', 
                        classifier: '', 
-                       file: '/target/hello-world-war-2.0.3.war', 
+                       file: '/home/ec2-user/workspace/learndevops/target/hello-world-war-2.0.3.war', 
                        type: 'war']
                        ], 
                        credentialsId: 'kiran-cred', 
