@@ -1,6 +1,8 @@
 currentBuild.displayName="learndevops-#"+BUILD_NUMBER
 pipeline{
-  properties([parameters([string(defaultValue: 'dev', description: 'Please update your branch name', name: 'Branch')])])
+  {
+  parameters string:defaultValue: 'dev', description: 'Please update your branch name', name: 'Branch'
+  }
    agent { label 'slave'}
    environment {
      PATH = "/opt/maven/bin:$PATH"
