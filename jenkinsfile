@@ -1,5 +1,6 @@
 currentBuild.displayName="learndevops-#"+BUILD_NUMBER
 pipeline{
+ properties([parameters([choice(choices: ['dev', 'master'], description: 'Please select your branch', name: 'Branch')])])
    agent { label 'slave'}
    environment {
      PATH = "/opt/maven/bin:$PATH"
@@ -13,7 +14,7 @@ pipeline{
         stage('checkout'){
             steps{
                checkout([$class: 'GitSCM', 
-               branches: [[name: '*/dev']],
+               branches: [[name: ${Branch}]],
                extensions: [], 
                userRemoteConfigs: [
                    [credentialsId: 'github', url: 'https://github.com/Bhanukiran213/hello-world-war.git']]]) 
