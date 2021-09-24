@@ -1,7 +1,7 @@
 currentBuild.displayName="learndevops-#"+BUILD_NUMBER
 pipeline{
   {
-  parameters string:defaultValue: 'dev', description: 'Please update your branch name', name: 'Branch'
+  parameters choice choices: ['dev', 'master', 'feature'], description: 'Please select your branch', name: 'Branch'
   }
    agent { label 'slave'}
    environment {
