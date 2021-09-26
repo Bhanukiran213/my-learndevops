@@ -15,7 +15,7 @@ pipeline{
         stage('checkout'){
             steps{
                checkout([$class: 'GitSCM', 
-               branches: [[name: ${Branch}]],
+               branches: [[name: :${params.Branch}"]],
                extensions: [], 
                userRemoteConfigs: [
                    [credentialsId: 'github', url: 'https://github.com/Bhanukiran213/hello-world-war.git']]]) 
