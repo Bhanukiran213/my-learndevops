@@ -1,0 +1,36 @@
+pipeline {
+   agent {
+  label 'master'
+}
+  environment {
+     PATH = "/opt/maven/bin:$PATH"
+	 registry = "<account_id>.dkr.ecr.ap-south-1.amazonaws.com/<my-repo>"
+     }
+   stages {
+        stage('checkout') {
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Bhanukiran213/hello-world-war.git']]])
+            }
+        }
+        stage('Build'){
+            steps{
+                sh 'mvn package'
+            }
+        }
+        stage('Building image') {
+      steps{
+        script {
+          dockerImage = docker.build registry:$BUILD_NUMBER
+        }
+		}
+		}
+        stage('Pushing to ECR') {
+     steps{  
+         script {
+                sh 'aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin <account_id>.dkr.ecr.ap-south-1.amazonaws.com'
+                sh 'docker push <account_id>.dkr.ecr.ap-south-1.amazonaws.com/myapplication:$BUID_NUMBER'
+         }
+        }
+      }
+}
+}
